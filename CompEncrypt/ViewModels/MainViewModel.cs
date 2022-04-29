@@ -75,8 +75,8 @@ namespace CompEncrypt.ViewModels
         public RelayCommand StartCompressionCommand => startCompressionCommand ?? new RelayCommand(async () =>
         {
             IsBusy = true;
-            Assembly assembly = GetType().GetTypeInfo().Assembly;
-            var image = assembly.GetManifestResourceNames().FirstOrDefault(t => t.Contains("jpg)"));
+            var assembly = Assembly.GetExecutingAssembly().FullName.Split(',').FirstOrDefault();
+            var image = $"{assembly}.Resources.Images.minion.jpg";
             var helpers = new FileUtilities();
             switch (posn)
             {
@@ -112,6 +112,9 @@ namespace CompEncrypt.ViewModels
                     ImageSource = helpers.ConvertToImage(StringImage);
                     break;
             }
-        });
+        })
+        {
+
+        };
     }
 }
