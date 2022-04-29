@@ -36,7 +36,7 @@ namespace CompEncrypt.Helpers
 
             if (string.IsNullOrEmpty(filename))
             {
-                messenger.Send<BooleanMessage>(new BooleanMessage { BoolValue = false, Message = "Done" });
+                messenger.Send(new BooleanMessage { BoolValue = false, Message = "Done" });
                 return "ImageNotFound";
             }
 
@@ -46,6 +46,12 @@ namespace CompEncrypt.Helpers
                 var imageArray = await File.ReadAllBytesAsync(filename);
                 base64ImageRepresentation = Convert.ToBase64String(imageArray);
             }
+            else
+            {
+                messenger.Send(new BooleanMessage { BoolValue = false, Message = "Done" });
+                return base64ImageRepresentation;
+            }
+
             while (base64ImageRepresentation == "ImageNotFound") { }
             messenger.Send(new BooleanMessage { BoolValue = true, Message = "Done" });
             return base64ImageRepresentation;
