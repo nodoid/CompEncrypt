@@ -15,8 +15,8 @@
     <ContentPage.BindingContext>
         <vm:MainViewModel x:Name="ViewModel" />
     </ContentPage.BindingContext>
-    <Grid ColumnDefinitions="5*,auto,5*" RowDefinitions="5*,auto,5*">
-        <Button Grid.Column="0" Grid.Row="2"
+    <Grid ColumnDefinitions="5*,90*,5*" RowDefinitions="5*,90*,5*">
+        <Button Grid.Column="1" Grid.Row="2"
                 Text="{Binding Converter={StaticResource Languages}, ConverterParameter=Main_Start}"
                 HorizontalOptions="Center"
                 Command="{Binding StartCompressionCommand}" />
@@ -27,7 +27,6 @@
                FontFamily="FontAwesome" 
                x:Name="LabelLoad"
                FontSize="80"
-               Style="{StaticResource LabelLarge}"
                HorizontalOptions="Center"/>
             <Label Padding="0,12"
                    Text="{Binding Message}" FontSize="Large" />
