@@ -7,10 +7,9 @@ using CompEncrypt.Setups;
 using Foundation;
 #endif
 
-[assembly: Dependency(typeof(Locales))]
 namespace CompEncrypt.Setups
 {
-    public class Locales : ILocalize
+    public class Locales 
     {
 #if IOS
         public void SetLocale()
