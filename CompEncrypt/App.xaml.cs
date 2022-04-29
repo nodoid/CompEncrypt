@@ -1,6 +1,5 @@
 ﻿using System.Globalization;
-
-using CompEncrypt.Interfaces;
+using CompEncrypt.Setups;
 
 namespace CompEncrypt;
 
@@ -9,14 +8,11 @@ public partial class App : Application
 	public static IServiceProvider Service { get; set; }
 	public App()
 	{
-		var netLanguage = DependencyService.Get<ILocalize>().GetCurrent();
-		Languages.Resources.Culture = new CultureInfo(netLanguage);
-		DependencyService.Get<ILocalize>().SetLocale();
-
+		var nl = new Locales();
+		Languages.Resources.Culture = new CultureInfo(nl.GetCurrent());
+		nl.SetLocale();
 		InitializeComponent();
-
 		Service = Startup.Init();
-		InitializeComponent();
 
 		MainPage = new AppShell();
 	}
