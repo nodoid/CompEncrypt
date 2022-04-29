@@ -64,4 +64,10 @@
 	  </EmbeddedResource>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <MauiImage Update="Resources\Images\minion.jpg">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </MauiImage>
+	</ItemGroup>
+
 </Project>
