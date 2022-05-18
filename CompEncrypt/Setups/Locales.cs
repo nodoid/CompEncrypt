@@ -1,8 +1,5 @@
 ﻿using System.Globalization;
 
-using CompEncrypt.Interfaces;
-using CompEncrypt.Setups;
-
 #if IOS
 using Foundation;
 #endif
