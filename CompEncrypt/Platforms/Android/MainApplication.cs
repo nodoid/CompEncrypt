@@ -1,5 +1,4 @@
-﻿#if ANDROID
-using Android.App;
+﻿using Android.App;
 using Android.Runtime;
 
 namespace CompEncrypt;
@@ -14,4 +13,4 @@ public class MainApplication : MauiApplication
 
 	protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
 }
-#endif
+

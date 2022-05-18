@@ -1,5 +1,4 @@
-﻿#if IOS
-using Foundation;
+﻿using Foundation;
 
 namespace CompEncrypt;
 
@@ -8,4 +7,4 @@ public class AppDelegate : MauiUIApplicationDelegate
 {
 	protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
 }
-#endif
+

@@ -1,7 +1,5 @@
-﻿#if ANDROID
-using Android.App;
+﻿using Android.App;
 using Android.Content.PM;
-using Android.OS;
 
 namespace CompEncrypt;
 
@@ -9,4 +7,3 @@ namespace CompEncrypt;
 public class MainActivity : MauiAppCompatActivity
 {
 }
-#endif
