@@ -61,6 +61,15 @@ namespace CompEncrypt.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Start process.
+        /// </summary>
+        internal static string Main_Start {
+            get {
+                return ResourceManager.GetString("Main_Start", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 5 second pause.
         /// </summary>
         internal static string Pause {
