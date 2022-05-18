@@ -28,8 +28,7 @@
                x:Name="LabelLoad"
                FontSize="80"
                HorizontalOptions="Center"/>
-            <Label Padding="0,12"
-                   Text="{Binding Message}" FontSize="Large" />
+            <Label Padding="0,12" Text="{Binding Message}" />
         </StackLayout>
         <StackLayout IsVisible="{Binding IsBusy, Converter={StaticResource Negate}}" 
                      Grid.Row="1" Grid.Column="1">
