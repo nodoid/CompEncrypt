@@ -41,8 +41,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiImage Remove="Resources\Images\minion.jpg" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Remove="Resources\Fonts\fa-solid900.otf" />
 	  <None Remove="Resources\Images\minion.jpg" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="Resources\Images\minion.jpg">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </EmbeddedResource>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -62,12 +72,6 @@
 	    <Generator>ResXFileCodeGenerator</Generator>
 	    <LastGenOutput>Resources.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiImage Update="Resources\Images\minion.jpg">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </MauiImage>
 	</ItemGroup>
 
 </Project>
