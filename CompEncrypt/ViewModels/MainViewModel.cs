@@ -77,12 +77,13 @@ namespace CompEncrypt.ViewModels
             IsBusy = true;
             var assembly = Assembly.GetExecutingAssembly().FullName.Split(',').FirstOrDefault();
             var image = $"{assembly}.Resources.Images.minion.jpg";
-            var helpers = new FileUtilities();
+
+            var helpers = new FileUtilities(image);
             switch (posn)
             {
                 case 0:
                     Message = Languages.Resources.Stage1;
-                    StringImage = await helpers.ConvertToBase64(image);
+                    StringImage = await helpers.ConvertToBase64();
                     posn++;
                     break;
                 case 1:
@@ -103,7 +104,7 @@ namespace CompEncrypt.ViewModels
                     break;
                 case 4:
                     Message = Languages.Resources.Stage5;
-                    if (helpers.DecryptFile(Constants.Constants.CompressPath))
+                    if (helpers.DecryptFile())
                         posn++;
                     break;
                 case 5:
