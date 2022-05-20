@@ -1,4 +1,5 @@
 ﻿using System.IO.Compression;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -12,38 +13,55 @@ namespace CompEncrypt.Helpers
     {
         IMessenger messenger = (IMessenger)Startup.ServiceProvider.GetService(typeof(IMessenger));
 
-        static Guid AppCuid { get; set; }      
-            public bool DeleteFile(string filename)
+        static Guid AppCuid { get; set; }
+        public string Filename { get; set; }
+        public string StoreDir { get; set; }
+        public FileUtilities(string image)
+        {
+            StoreDir = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            Filename = $"{StoreDir}/minion.jpg";
+            if (File.Exists(Filename))
+                File.Delete(Filename);
+
+            var assembly = Assembly.GetExecutingAssembly();
+            var stream = assembly.GetManifestResourceStream("CompEncrypt.Resources.Images.minion.jpg");
+                var fileStream = File.Create(Filename);
+                stream.Seek(0, SeekOrigin.Begin);
+                stream.CopyTo(fileStream);
+            stream.Close();
+        }
+
+        public bool DeleteFile()
         {
             var ok = true;
             try
             {
-                File.Delete($"{Constants.Constants.DataPath}\\{filename}");
+                File.Delete($"{StoreDir}/{Filename}");
             }
             catch (Exception)
             {
 #if DEBUG
-                Console.WriteLine($"File {filename} not found");
+                Console.WriteLine($"File {Filename} not found");
 #endif
                 ok = false;
             }
             return ok;
         }
 
-        public async Task<string> ConvertToBase64(string filename)
+        public async Task<string> ConvertToBase64()
         {
             AppCuid = Guid.NewGuid();
 
-            if (string.IsNullOrEmpty(filename))
+            if (string.IsNullOrEmpty(Filename))
             {
                 messenger.Send(new BooleanMessage { BoolValue = false, Message = "Done" });
                 return "ImageNotFound";
             }
 
             string base64ImageRepresentation = "ImageNotFound";
-            if (File.Exists(filename))
+            if (File.Exists(Filename))
             {
-                var imageArray = await File.ReadAllBytesAsync(filename);
+                var imageArray = await File.ReadAllBytesAsync(Filename);
                 base64ImageRepresentation = Convert.ToBase64String(imageArray);
             }
             else
@@ -65,7 +83,7 @@ namespace CompEncrypt.Helpers
             var enc = Encoding.ASCII.GetBytes(AppCuid.ToString());
             try
             {
-                using FileStream myStream = new FileStream($"{Constants.Constants.CompressPath}\\encrypted.enc",
+                using FileStream myStream = new FileStream($"{StoreDir}/encrypted.enc",
                     FileMode.OpenOrCreate);
 
                 using Aes aes = Aes.Create();
@@ -92,8 +110,8 @@ namespace CompEncrypt.Helpers
 
         public async Task CompressFile()
         {
-            var fileToBeCompressed = $"{Constants.Constants.CompressPath}\\encrypted.enc";
-            var zipFilename = $"{Constants.Constants.CompressPath}\\encrypted.zip";
+            var fileToBeCompressed = $"{StoreDir}/encrypted.enc";
+            var zipFilename = $"{StoreDir}/encrypted.zip";
 
             using (var target = new FileStream(zipFilename, FileMode.Create, FileAccess.Write))
             using (var alg = new GZipStream(target, CompressionMode.Compress))
@@ -107,8 +125,8 @@ namespace CompEncrypt.Helpers
 
         public async Task DecompressFile()
         {
-            var compressedFile = $"{Constants.Constants.CompressPath}\\encrypted.zip";
-            var originalFileName = $"{Constants.Constants.CompressPath}\\encrypted.enc";
+            var compressedFile = $"{StoreDir}/encrypted.zip";
+            var originalFileName = $"{StoreDir}/encrypted.enc";
 
             using (var zipFile = new FileStream(compressedFile, FileMode.Open, FileAccess.Read))
             using (var originalFile = new FileStream(originalFileName, FileMode.Create, FileAccess.Write))
@@ -130,12 +148,12 @@ namespace CompEncrypt.Helpers
             }
         }
 
-        public bool DecryptFile(string filename)
+        public bool DecryptFile()
         {
             var enc = Encoding.ASCII.GetBytes(AppCuid.ToString());
             try
             {
-                using FileStream myStream = new FileStream($"{Constants.Constants.CompressPath}\\encrypted.enc",
+                using FileStream myStream = new FileStream($"{StoreDir}/encrypted.enc",
                     FileMode.Open);
 
                 using Aes aes = Aes.Create();
