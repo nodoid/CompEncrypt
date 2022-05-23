@@ -3,6 +3,8 @@ using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 
+using Android.Icu.Lang;
+
 using CommunityToolkit.Mvvm.Messaging;
 
 using CompEncrypt.Models;
@@ -24,10 +26,10 @@ namespace CompEncrypt.Helpers
                 File.Delete(Filename);
 
             var assembly = Assembly.GetExecutingAssembly();
-            var stream = assembly.GetManifestResourceStream("CompEncrypt.Resources.Images.minion.jpg");
-                var fileStream = File.Create(Filename);
-                stream.Seek(0, SeekOrigin.Begin);
-                stream.CopyTo(fileStream);
+            using var stream = assembly.GetManifestResourceStream("CompEncrypt.Resources.Images.minion.jpg");
+            var fileStream = File.Create(Filename);
+            stream.Seek(0, SeekOrigin.Begin);
+            stream.CopyTo(fileStream);
             stream.Close();
         }
 
