@@ -58,17 +58,16 @@ namespace CompEncrypt.Helpers
                 return "ImageNotFound";
             }
 
-            string base64ImageRepresentation = "ImageNotFound";
-            if (File.Exists(Filename))
-            {
-                var imageArray = await File.ReadAllBytesAsync(Filename);
-                base64ImageRepresentation = Convert.ToBase64String(imageArray);
-            }
-            else
+            if (!File.Exists(Filename))
             {
                 messenger.Send(new BooleanMessage { BoolValue = false, Message = "Done" });
-                return base64ImageRepresentation;
+                return "ImageNotFound";
             }
+
+            var base64ImageRepresentation = "ImageNotFound";
+            
+            var imageArray = await File.ReadAllBytesAsync(Filename);
+            base64ImageRepresentation = Convert.ToBase64String(imageArray);
 
             while (base64ImageRepresentation == "ImageNotFound") { }
             messenger.Send(new BooleanMessage { BoolValue = true, Message = "Done" });
