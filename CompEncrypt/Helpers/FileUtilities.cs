@@ -3,8 +3,6 @@ using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 
-using Android.Icu.Lang;
-
 using CommunityToolkit.Mvvm.Messaging;
 
 using CompEncrypt.Models;
@@ -183,4 +181,3 @@ namespace CompEncrypt.Helpers
         }
     }
 }
-
